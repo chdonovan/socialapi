@@ -49,3 +49,15 @@ const ThoughtSchema = new Schema(
         }
     }
 );
+
+
+// virtual - total reaction count and length
+ThoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+})
+
+// comment model via schema
+const Though = model('Thought', ThoughtSchema);
+
+// export model
+module.exports = Thought;
