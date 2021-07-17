@@ -43,6 +43,43 @@ const userConroller = {
             res.status(400).json(err);
         });
     },
+    // UPDATE USER
+    updateUser({ params, body }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            body,
+            { new: true, runValidators: true }
+        )
+        .then(dbUserData => {
+            if(!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id!' });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.status(404).json(err));
+    },
+    // DELETE USER
+    deleteUser({ params }, res) {   
+        User.findOneAndDelete({ _id: params.userId })
+        .then (deletedUser => {
+            if(!deletedUser) {
+                return res.status(404).json({ message: 'No user found' });
+            }
+            return Thought.findOneAndDelete(
+                { username: params.username },
+                { $pull: { thoughts: { username: params.userController } } }, 
+                { new: true }
+            );
+        })
+        .then(deletedThought => {
+            if (!deletedThought) {
+                return res.status(404).json({ message: 'No thoughts found' });
+            }
+            res.json(deletedThought);
+        })
+        .catch(err => res.status(400).json(err));
+    },
 }
 
 
