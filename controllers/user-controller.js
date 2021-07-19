@@ -4,25 +4,25 @@ const userConroller = {
     // creates a user
     createUser({ body }, res) {
         console.log(body);
-        console.log('WE MADE IT!');
+        console.log('Made it here!');
         User.create(body)
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
             console.log(err + dbUserData + 'WHYYYY');
+            res.status(404).json(err);
         });
-        
     },
     // retrieve all user
-    getAllUsers(req, res ){
+    getAllUsers(req, res) {
         User.find({})
         .populate({
-            path:'thoughts',
-            selecy: '__v'
+            path: 'thoughts',
+            select: '-__v'
         })
-        .select('__v')
+        .select('-__v')
         .sort({ _id: -1 })
         .then(dbUserData => res.json(dbUserData))
-        .catch( err => res.status(404).json(err));
+        .catch(err => res.status(404).json(err));
     },
     getUserById({ params }, res) {
         User.findOne({ _id: params.userId })

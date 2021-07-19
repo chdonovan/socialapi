@@ -1,5 +1,5 @@
 const addDateSuffix = date => {
-    let dateStr = datetoString();
+    let dateStr = date.toString();
 
     // get last charcter of date string
     const lastChar = dateStr.charAt(dateStr.length - 1);
@@ -11,7 +11,7 @@ const addDateSuffix = date => {
     } else if (lastChar === '3' && dateStr !== '13') {
         dateStr = `${dateStr}rd`;
     } else {
-        dateStr = `${daterStr}th`;
+        dateStr = `${dateStr}th`;
     }
 
     return dateStr;

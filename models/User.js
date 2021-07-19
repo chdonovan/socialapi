@@ -7,12 +7,13 @@ const UserSchema = new Schema(
             required: true,
             unique: true,
             lowercase: true,
-            trim: true
+            trim: true   
         },
         email: {
             type: String,
             required: true,
             unique: true
+            // match: '/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/i'
         },
         thoughts: [
             {
@@ -22,7 +23,7 @@ const UserSchema = new Schema(
         ],
         friends: [
             {
-                thpe: Schema.Tyoes.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: 'User'
             }
         ]
